@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="40dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"     >
@@ -20,7 +20,7 @@
 
         <EditText
             android:id="@+id/area"
-            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:padding="15dp"
@@ -62,23 +62,24 @@
                 android:id="@+id/edate"
                 android:layout_width="168dp"
                 android:layout_height="40dp"
-                android:background="@drawable/inputbox"
                 android:layout_weight="1"
-                android:inputType="date"
-                android:padding="10dp"
-                android:hint="종료일"/>
+                android:background="@drawable/inputbox"
+                android:hint="종료일"
+                android:inputType="date|time"
+                android:padding="10dp" />
 
         </LinearLayout>
 
         <EditText
             android:id="@+id/travel_story"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:inputType="textMultiLine"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
             android:background="@drawable/inputbox"
             android:hint="여행에 대한 간략한 설명을 적어주세요."
+            android:inputType="text"
             android:padding="15dp"
-            android:layout_marginBottom="25dp"/>
+            android:maxLength="20"/>
 
         <TextView
             android:text="가격을 입력하세요"
@@ -89,7 +90,7 @@
 
         <EditText
             android:id="@+id/price"
-            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:padding="15dp"

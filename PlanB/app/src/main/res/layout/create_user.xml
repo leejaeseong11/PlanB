@@ -104,6 +104,7 @@
             android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="male"
             android:textSize="18sp" />
 
@@ -111,6 +112,7 @@
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="female"
             android:textSize="18sp" />
 
@@ -131,17 +133,19 @@
         <TextView
             android:id="@+id/dob"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/inputbox"
+            android:gravity="center_vertical"
             android:text="날짜를 선택해주세요"
+            android:paddingLeft="10dp"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/selectDobButton"
-            android:layout_width="53dp"
-            android:layout_height="44dp"
-            android:layout_weight="1"
-            android:text="날짜선택"
+            android:layout_width="51dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_today"
             android:textSize="18sp" />
 
     </LinearLayout>
@@ -160,6 +164,7 @@
         android:background="@drawable/introduce"
         android:ems="10"
         android:gravity="top"
+        android:padding="12dp"
         android:hint="내용을 입력해주세요"
         android:inputType="textPersonName|textMultiLine" />
 

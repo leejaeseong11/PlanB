@@ -44,7 +44,6 @@
             android:layout_width="359dp"
             android:layout_height="44dp"
             android:background="#ffffff"
-            android:layout_marginBottom="25dp"
             android:hint="   원하는 지역을 입력하세요"
             android:inputType="text"/>
     </LinearLayout>
@@ -69,15 +68,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/sdate"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:background="#ffffff"
-            android:inputType="date"
-            android:hint="2019-10-10"/>
+            android:hint="2019-10-10"
+            android:inputType="date" />
+
+        <Button
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:text="검색"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +93,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="계속 진행하시면 PlanB의 서비스 약관과 개인정보처리방침에 동의하게 됩니다."
             android:textSize="15sp" />

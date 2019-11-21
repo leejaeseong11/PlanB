@@ -73,7 +73,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="270dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/inputbox"
         android:text="가이드 소개글입니다. 저는 이 지역에서 20년간 살아온 토박이입니다. 누구보다 이지역의 숨은 맛집을 잘 알죠. 가격 흥정은 얼마든지 가능하니 누구나 편하게 연락주십시요."
@@ -83,6 +83,11 @@
         android:id="@+id/select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:text="이메일 보내기" />
+
+    <Button
+        android:id="@+id/select2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전화하기" />
 </LinearLayout>

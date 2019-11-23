@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class create_user extends AppCompatActivity {
@@ -24,18 +27,22 @@ public class create_user extends AppCompatActivity {
 
     // 파이어베이스 인증 객체 생성
     private FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     // 이메일, 비밀번호, 전화번호, 성별, 생년월일, 소개글
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextPhone;
-    private RadioButton editTextGenderMale;
-    private RadioButton editTextGenderFemale;
-    private EditText editTextDob;
+    private EditText editTextDob;   // YYYY-MM-DD
     private EditText editTextIntroduce;
 
     private String email = "";
     private String password = "";
+    private String phone = "";
+    private Character gender = null;    // M, F
+    private String dob = "";            // YYYY-MM-DD
+    private String introduce = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +52,13 @@ public class create_user extends AppCompatActivity {
         // 파이어베이스 인증 객체 선언
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // 데이터베이스 연결
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("User");
+
         editTextEmail = findViewById(R.id.emailCreateUser);
         editTextPassword = findViewById(R.id.passwordCreateUser);
         editTextPhone = findViewById(R.id.phoneCreateUser);
-        editTextGenderMale = findViewById(R.id.male);
-        editTextGenderFemale = findViewById(R.id.female);
         editTextDob = findViewById(R.id.passwordCreateUser);
         editTextIntroduce = findViewById(R.id.passwordCreateUser);
     }
@@ -57,12 +66,26 @@ public class create_user extends AppCompatActivity {
     public void singUp(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
+        phone = editTextPhone.getText().toString();
+        dob = editTextDob.getText().toString();
+        introduce = editTextIntroduce.getText().toString();
 
-
-
-        if(isValidEmail() && isValidPasswd()) {
-            createUser(email, password);
+        if (isValidValues()) {
+            createUser(email, password, phone, dob, introduce, gender);
+        } else {
+            Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // 회원가입 정보 유효성 검사
+    private boolean isValidValues() {
+        if (phone.isEmpty()) return false;
+        else if (dob.isEmpty()) return false;
+        else if (introduce.isEmpty()) return false;
+        else if (gender.equals(null)) return false;
+        else if (!isValidEmail()) return false;
+        else if (!isValidPasswd()) return false;
+        else return true;
     }
 
     // 이메일 유효성 검사
@@ -92,7 +115,14 @@ public class create_user extends AppCompatActivity {
     }
 
     // 회원가입
-    private void createUser(String email, String password) {
+    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
+        Map<String, Object> users = new HashMap<>();
+        users.put("phone", phone);
+        users.put("gender", gender);
+        users.put("date_of_birth", dob);
+        users.put("introduce", introduce);
+        myRef.child(email).push().updateChildren(users);
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,7 +141,12 @@ public class create_user extends AppCompatActivity {
 
     public void onGenderRadioClicked(View view) {
         switch(view.getId()) {
-
+            case R.id.male:
+                gender = 'M';
+                break;
+            case R.id.female:
+                gender = 'F';
+                break;
         }
     }
 }

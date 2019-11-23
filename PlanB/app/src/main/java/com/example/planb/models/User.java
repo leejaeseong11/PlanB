@@ -9,7 +9,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class User {
     public String email;
     public String phone;
-    public char gender;     // M, W
+    public char gender;     // M, F
     public String dob;      // YYYY-MM-DD
     public String introduce;
     public Drawable picture;
@@ -25,6 +25,5 @@ public class User {
         this.dob = dob;
         this.introduce = introduce;
     }
-
 }
 // [END rtdb_user_class]

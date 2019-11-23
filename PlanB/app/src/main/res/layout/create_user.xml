@@ -66,27 +66,13 @@
         android:text="전화번호"
         android:textSize="18sp" />
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/phoneCreateUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
-        <Spinner
-            android:id="@+id/countryCreateUser"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:spinnerMode="dropdown" />
-
-        <EditText
-            android:id="@+id/phoneCreateUser"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:hint="번호를 입력해주세요"
-            android:inputType="phone" />
-    </LinearLayout>
+        android:ems="10"
+        android:hint="번호를 입력해주세요"
+        android:inputType="phone" />
 
     <TextView
         android:layout_width="match_parent"

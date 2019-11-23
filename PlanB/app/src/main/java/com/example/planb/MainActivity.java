@@ -1,6 +1,5 @@
 package com.example.planb;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private String email = "";
     private String password = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,18 +41,13 @@ public class MainActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
     }
 
-    public void onSigninButtonClicked(View view) {
+    public void signIn(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
         if(isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
         }
-    }
-
-    public void onSignUpButtonClicked(View view) {
-        Intent intent = new Intent(this, create_user.class);
-        startActivity(intent);
     }
 
     // 이메일 유효성 검사
@@ -92,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // 로그인 성공
-                            Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Main.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             //  Intent intent = new Intent(getApplicationContext(), showData.class);
                             //startActivity(intent);
                         } else {
                             // 로그인 실패
-                            Toast.makeText(MainActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(login.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

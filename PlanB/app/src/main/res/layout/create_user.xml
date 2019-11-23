@@ -148,7 +148,8 @@
             android:layout_width="51dp"
             android:layout_height="wrap_content"
             android:background="@android:drawable/ic_menu_today"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="onDatePickerClicked"/>
 
     </LinearLayout>
 

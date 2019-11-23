@@ -1,10 +1,13 @@
 package com.example.planb;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class create_user extends AppCompatActivity {
@@ -33,6 +38,7 @@ public class create_user extends AppCompatActivity {
     private RadioButton editTextGenderFemale;
     private EditText editTextDob;
     private EditText editTextIntroduce;
+    private Button editdatePicker;
 
     private String email = "";
     private String password = "";
@@ -52,13 +58,12 @@ public class create_user extends AppCompatActivity {
         editTextGenderFemale = findViewById(R.id.female);
         editTextDob = findViewById(R.id.passwordCreateUser);
         editTextIntroduce = findViewById(R.id.passwordCreateUser);
+        editdatePicker = findViewById(R.id.selectDobButton);
     }
 
     public void singUp(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
-
-
 
         if(isValidEmail() && isValidPasswd()) {
             createUser(email, password);
@@ -113,5 +118,22 @@ public class create_user extends AppCompatActivity {
         switch(view.getId()) {
 
         }
+    }
+
+    public void onDatePickerClicked(View view){
+        //Calendar를 이용하여 년, 월, 일, 시간, 분을 PICKER에 넣어준다.
+        final Calendar cal = Calendar.getInstance();
+
+        DatePickerDialog dialog = new DatePickerDialog(create_user.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int date) {
+                String dateString = String.format("%d%d%d", year, month+1, date);
+                TextView dob = (TextView)findViewById(R.id.dob);
+                dob.setText(dateString);
+            }
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+
+        dialog.getDatePicker().setMaxDate(new Date().getTime());    //입력한 날짜 이후로 클릭 안되게 옵션
+        dialog.show();
     }
 }

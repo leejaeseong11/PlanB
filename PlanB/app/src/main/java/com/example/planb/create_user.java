@@ -6,11 +6,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
-=======
-import android.widget.RadioButton;
 import android.widget.TextView;
->>>>>>> 4c62cad276a3cfcc4a1ea8265d1dfa0d164d9fc1
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,16 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-<<<<<<< HEAD
-import java.util.HashMap;
-import java.util.Map;
-=======
 import java.util.Calendar;
 import java.util.Date;
->>>>>>> 4c62cad276a3cfcc4a1ea8265d1dfa0d164d9fc1
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class create_user extends AppCompatActivity {
+    private Button editdatePicker;
 
     // 비밀번호 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
@@ -48,7 +42,6 @@ public class create_user extends AppCompatActivity {
     private EditText editTextPhone;
     private EditText editTextDob;   // YYYY-MM-DD
     private EditText editTextIntroduce;
-    private Button editdatePicker;
 
     private String email = "";
     private String password = "";
@@ -74,6 +67,7 @@ public class create_user extends AppCompatActivity {
         editTextPhone = findViewById(R.id.phoneCreateUser);
         editTextDob = findViewById(R.id.passwordCreateUser);
         editTextIntroduce = findViewById(R.id.passwordCreateUser);
+
         editdatePicker = findViewById(R.id.selectDobButton);
     }
 
@@ -83,7 +77,7 @@ public class create_user extends AppCompatActivity {
         phone = editTextPhone.getText().toString();
         dob = editTextDob.getText().toString();
         introduce = editTextIntroduce.getText().toString();
-        
+
         if (isValidValues()) {
             createUser(email, password, phone, dob, introduce, gender);
         } else {

@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="내용을 입력해주세요"
-                android:inputType="phone" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
     </LinearLayout>
@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="번호를 입력해주세요"
-            android:inputType="textPersonName" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <TextView
@@ -106,7 +106,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="male"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="onGenderRadioClicked"/>
 
         <RadioButton
             android:id="@+id/female"
@@ -114,7 +115,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="female"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="onGenderRadioClicked"/>
 
     </RadioGroup>
 
@@ -172,6 +174,7 @@
         android:id="@+id/updateUserButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:text="회원가입"
+        android:onClick="singUp"/>
 
 </LinearLayout>

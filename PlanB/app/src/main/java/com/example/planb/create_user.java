@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,9 +25,14 @@ public class create_user extends AppCompatActivity {
     // 파이어베이스 인증 객체 생성
     private FirebaseAuth firebaseAuth;
 
-    // 이메일과 비밀번호
+    // 이메일, 비밀번호, 전화번호, 성별, 생년월일, 소개글
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText editTextPhone;
+    private RadioButton editTextGenderMale;
+    private RadioButton editTextGenderFemale;
+    private EditText editTextDob;
+    private EditText editTextIntroduce;
 
     private String email = "";
     private String password = "";
@@ -41,11 +47,18 @@ public class create_user extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.emailCreateUser);
         editTextPassword = findViewById(R.id.passwordCreateUser);
+        editTextPhone = findViewById(R.id.phoneCreateUser);
+        editTextGenderMale = findViewById(R.id.male);
+        editTextGenderFemale = findViewById(R.id.female);
+        editTextDob = findViewById(R.id.passwordCreateUser);
+        editTextIntroduce = findViewById(R.id.passwordCreateUser);
     }
 
     public void singUp(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
+
+
 
         if(isValidEmail() && isValidPasswd()) {
             createUser(email, password);
@@ -87,6 +100,7 @@ public class create_user extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 회원가입 성공
                             Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
                             // 회원가입 실패
                             Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
@@ -95,5 +109,9 @@ public class create_user extends AppCompatActivity {
                 });
     }
 
+    public void onGenderRadioClicked(View view) {
+        switch(view.getId()) {
 
+        }
+    }
 }

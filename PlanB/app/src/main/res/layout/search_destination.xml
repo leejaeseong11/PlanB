@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="25dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="당신의 PlanB를 알려주세요"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:layout_width="302dp"
+            android:layout_height="353dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/beta" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="58dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:text="여행지"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="359dp"
+            android:layout_height="44dp"
+            android:background="#ffffff"
+            android:hint="   원하는 지역을 입력하세요"
+            android:inputType="text"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/sdate"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            android:hint="2019-10-10"
+            android:inputType="date" />
+
+        <Button
+            android:layout_width="63dp"
+            android:layout_height="50dp"
+            android:text="검색"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="계속 진행하시면 PlanB의 서비스 약관과 개인정보처리방침에 동의하게 됩니다."
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

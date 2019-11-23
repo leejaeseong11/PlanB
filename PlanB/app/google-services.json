@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "584428892705",
+    "firebase_url": "https://planb-32e2f.firebaseio.com",
+    "project_id": "planb-32e2f",
+    "storage_bucket": "planb-32e2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584428892705:android:0acaaedfb0aaa621f72960",
+        "android_client_info": {
+          "package_name": "com.example.planb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584428892705-4madhiitlmpbb2noc6sfhdv0ddsdrhss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planb",
+            "certificate_hash": "f73654b0e42435b3ad34082fed6edeb9727e4fe6"
+          }
+        },
+        {
+          "client_id": "584428892705-gcv610808ncfpatn6hphma3sq9d5ql4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbpEsMZYAAiXD80ZwupHfpy7LBhgAzIek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584428892705-gcv610808ncfpatn6hphma3sq9d5ql4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

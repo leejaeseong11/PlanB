@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="25dp"
-    android:layout_marginTop="25dp"
-    android:layout_marginRight="25dp"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_margin="30sp">
 
-    <TextView
+<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
@@ -72,49 +68,26 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@mipmap/ic_launcher" />
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="270dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/inputbox"
         android:text="가이드 소개글입니다. 저는 이 지역에서 20년간 살아온 토박이입니다. 누구보다 이지역의 숨은 맛집을 잘 알죠. 가격 흥정은 얼마든지 가능하니 누구나 편하게 연락주십시요."
         android:textSize="20sp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="0.0"
-            android:textSize="27sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text=" / 5.0"
-            android:textSize="27sp" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="선택" />
+        android:text="이메일 보내기" />
+
+    <Button
+        android:id="@+id/select2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전화하기" />
 </LinearLayout>

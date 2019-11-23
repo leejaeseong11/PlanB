@@ -1,9 +1,16 @@
 package com.example.planb;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+<<<<<<< HEAD
+=======
+import android.widget.RadioButton;
+import android.widget.TextView;
+>>>>>>> 4c62cad276a3cfcc4a1ea8265d1dfa0d164d9fc1
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,8 +23,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.Map;
+=======
+import java.util.Calendar;
+import java.util.Date;
+>>>>>>> 4c62cad276a3cfcc4a1ea8265d1dfa0d164d9fc1
 import java.util.regex.Pattern;
 
 public class create_user extends AppCompatActivity {
@@ -36,6 +48,7 @@ public class create_user extends AppCompatActivity {
     private EditText editTextPhone;
     private EditText editTextDob;   // YYYY-MM-DD
     private EditText editTextIntroduce;
+    private Button editdatePicker;
 
     private String email = "";
     private String password = "";
@@ -61,6 +74,7 @@ public class create_user extends AppCompatActivity {
         editTextPhone = findViewById(R.id.phoneCreateUser);
         editTextDob = findViewById(R.id.passwordCreateUser);
         editTextIntroduce = findViewById(R.id.passwordCreateUser);
+        editdatePicker = findViewById(R.id.selectDobButton);
     }
 
     public void singUp(View view) {
@@ -69,7 +83,7 @@ public class create_user extends AppCompatActivity {
         phone = editTextPhone.getText().toString();
         dob = editTextDob.getText().toString();
         introduce = editTextIntroduce.getText().toString();
-
+        
         if (isValidValues()) {
             createUser(email, password, phone, dob, introduce, gender);
         } else {
@@ -148,5 +162,22 @@ public class create_user extends AppCompatActivity {
                 gender = 'F';
                 break;
         }
+    }
+
+    public void onDatePickerClicked(View view){
+        //Calendar를 이용하여 년, 월, 일, 시간, 분을 PICKER에 넣어준다.
+        final Calendar cal = Calendar.getInstance();
+
+        DatePickerDialog dialog = new DatePickerDialog(create_user.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int date) {
+                String dateString = String.format("%d%d%d", year, month+1, date);
+                TextView dob = (TextView)findViewById(R.id.dob);
+                dob.setText(dateString);
+            }
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+
+        dialog.getDatePicker().setMaxDate(new Date().getTime());    //입력한 날짜 이후로 클릭 안되게 옵션
+        dialog.show();
     }
 }

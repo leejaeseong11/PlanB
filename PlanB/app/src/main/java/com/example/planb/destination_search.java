@@ -69,15 +69,16 @@ public class destination_search extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
         switch(item.getItemId()){
             case R.id.registerdestination :
-                Intent intent = new Intent(destination_search.this, destination_regist.class);
+                intent = new Intent(destination_search.this, destination_regist.class);
                 startActivity(intent);
                 break;
-//            case R.id.myinfo :
-//                Intent intent = new Intent(destination_search.this, myinfo.class);
-//                startActivity(intent);
-//                break;
+            case R.id.myinfo :
+                intent = new Intent(destination_search.this, UpdateUser.class);
+                startActivity(intent);
+                break;
 //            case R.id.logout :
 //                Intent intent = new Intent(destination_search.this, logout.class);
 //                startActivity(intent);

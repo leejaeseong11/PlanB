@@ -42,5 +42,41 @@ public class User {
         results.put("picture", picture);
         return results;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                ", dob='" + dob + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", picture='" + picture + '\'' +
+                '}';
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setGender(Character gender) {
+        this.gender = gender;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 }
 // [END rtdb_user_class]

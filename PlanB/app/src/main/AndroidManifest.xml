@@ -9,25 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".destination_regist">
-            <intent-filter
-                >
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <!--
-        <activity android:name=".destination_search">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".guide_list"
-            android:label="guide_list">
-        </activity>-->
+        <activity android:name=".create_user"
+            android:label="Create User" />
     </application>
 
 </manifest>

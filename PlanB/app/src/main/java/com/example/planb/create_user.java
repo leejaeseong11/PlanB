@@ -1,14 +1,19 @@
 package com.example.planb;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +46,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
+
 public class create_user extends AppCompatActivity {
     private Button editdatePicker;
 
@@ -70,6 +78,21 @@ public class create_user extends AppCompatActivity {
     String urlString = ""; //이미지 파일 경로
     String filename;
 
+    // 인증용
+    LayoutInflater dialog; //LayoutInflater
+    View dialogLayout; //layout을 담을 View
+    Dialog authDialog; //dialog 객체
+
+    /*카운트 다운 타이머에 관련된 필드*/
+    TextView time_counter; //시간을 보여주는 TextView
+    EditText emailAuth_number; //인증 번호를 입력 하는 칸
+    Button emailAuth_btn; // 인증버튼
+    CountDownTimer countDownTimer;
+    final int MILLISINFUTURE = 300 * 1000; //총 시간 (300초 = 5분)
+    final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
+
+    String randomNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,23 +110,48 @@ public class create_user extends AppCompatActivity {
         editTextIntroduce = findViewById(R.id.introductionCreateUser);
         editdatePicker = findViewById(R.id.selectDobButton);
         editImage = findViewById(R.id.imageCreatUser);
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .permitDiskReads()
+                .permitDiskWrites()
+                .permitNetwork().build());
     }
 
-    public void singUp(View view) {
+    public void signUp(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
         phone = editTextPhone.getText().toString();
         introduce = editTextIntroduce.getText().toString();
 
-        email = "test" + new Random().nextInt() + "@d.com";
-        password = "password12!";
-        phone = "01088888888";
-        dobString = "19991228";
-        gender = 'F';
-        introduce = "안녕하세요~~ 미라지예요~~";
         boolean flag = uploadFile();
         if (isValidValues() && flag) {
-            createUser(email, password, phone, dobString, introduce, gender, urlString);
+            try {
+                GMailSender gMailSender = new GMailSender("rlatmdrb1996@gmail.com", "aizqymlazkqcjmhj");
+                randomNum = gMailSender.getEmailCode();
+                String body = "Plan B에 가입해 주셔서 감사합니다!\n인증코드는 " + randomNum + "입니다.\n환영합니다!";
+
+                //GMailSender.sendMail(제목, 본문내용, 받는사람);
+                gMailSender.sendMail("Plan B 인증 메일입니다.", body, email);
+                Toast.makeText(getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
+            } catch (SendFailedException e) {
+                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
+                return;
+            } catch (MessagingException e) {
+                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주십시오", Toast.LENGTH_SHORT).show();
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            dialog = LayoutInflater.from(this);
+            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
+            authDialog = new Dialog(this); //Dialog 객체 생성
+            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
+            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
+            authDialog.setOnCancelListener(new OnCancelClass()); //다이얼로그를 닫을 때 일어날 일을 정의하기 위해 onCancelListener 설정
+            authDialog.show(); //Dialog를 나타내어 준다.
+            countDownTimer();
         } else {
             Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
         }
@@ -272,4 +320,58 @@ public class create_user extends AppCompatActivity {
         }
     }
 
+    class OnCancelClass implements Dialog.OnCancelListener {
+        @Override
+        public void onCancel(DialogInterface dialog) {
+            countDownTimer.cancel();
+        } //다이얼로그 닫을 때 카운트 다운 타이머의 cancel()메소드 호출
+    }
+
+    public void countDownTimer() { //카운트 다운 메소드
+
+        time_counter = (TextView) dialogLayout.findViewById(R.id.emailAuth_time_counter);
+        //줄어드는 시간을 나타내는 TextView
+        emailAuth_number = (EditText) dialogLayout.findViewById(R.id.emailAuth_number);
+        //사용자 인증 번호 입력창
+        emailAuth_btn = (Button) dialogLayout.findViewById(R.id.emailAuth_btn);
+        //인증하기 버튼
+
+
+        countDownTimer = new CountDownTimer(MILLISINFUTURE, COUNT_DOWN_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) { //(300초에서 1초 마다 계속 줄어듬)
+
+                long emailAuthCount = millisUntilFinished / 1000;
+                Log.d("Alex", emailAuthCount + "");
+
+                if ((emailAuthCount - ((emailAuthCount / 60) * 60)) >= 10) { //초가 10보다 크면 그냥 출력
+                    time_counter.setText((emailAuthCount / 60) + " : " + (emailAuthCount - ((emailAuthCount / 60) * 60)));
+                } else { //초가 10보다 작으면 앞에 '0' 붙여서 같이 출력. ex) 02,03,04...
+                    time_counter.setText((emailAuthCount / 60) + " : 0" + (emailAuthCount - ((emailAuthCount / 60) * 60)));
+                }
+
+                //emailAuthCount은 종료까지 남은 시간임. 1분 = 60초 되므로,
+                // 분을 나타내기 위해서는 종료까지 남은 총 시간에 60을 나눠주면 그 몫이 분이 된다.
+                // 분을 제외하고 남은 초를 나타내기 위해서는, (총 남은 시간 - (분*60) = 남은 초) 로 하면 된다.
+
+            }
+
+            @Override
+            public void onFinish() { //시간이 다 되면 다이얼로그 종료
+
+                authDialog.cancel();
+
+            }
+        }.start();
+    }
+
+    public void onCertifyButtonClicked(View view) {
+        String user_answer = emailAuth_number.getText().toString();
+        if(user_answer.equals(randomNum)){
+            Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
+            createUser(email, password, phone, dobString, introduce, gender, urlString);
+        }else{
+            Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

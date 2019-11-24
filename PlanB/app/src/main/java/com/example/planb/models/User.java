@@ -16,18 +16,19 @@ public class User {
     public Character gender;     // M, F
     public String dob;      // YYYY-MM-DD
     public String introduce;
-    public Drawable picture;
+    public String picture;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String email, String phone, Character gender, String dob, String introduce) {
+    public User(String email, String phone, Character gender, String dob, String introduce, String picture) {
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.dob = dob;
         this.introduce = introduce;
+        this.picture = picture;
     }
 
     @Exclude
@@ -38,7 +39,7 @@ public class User {
         results.put("gender", gender.toString());
         results.put("date_of_birth", dob);
         results.put("introduce", introduce);
-
+        results.put("picture", picture);
         return results;
     }
 }

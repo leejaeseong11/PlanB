@@ -1,12 +1,18 @@
 package com.example.planb;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planb.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +31,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -46,6 +60,7 @@ public class create_user extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextPhone;
     private EditText editTextIntroduce;
+    private ImageView editImage;
 
     private String email = "";
     private String password = "";
@@ -54,6 +69,10 @@ public class create_user extends AppCompatActivity {
     private String dobString = "";            // YYYY-MM-DD
     private String introduce = "";
     private static int key;
+    private Uri filePath;//uri로 이미지 받아오는 경로(암시적 intent)
+    String urlString = ""; //이미지 파일 경로
+    String filename;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +89,7 @@ public class create_user extends AppCompatActivity {
         editTextPhone = findViewById(R.id.phoneCreateUser);
         editTextIntroduce = findViewById(R.id.introductionCreateUser);
         editdatePicker = findViewById(R.id.selectDobButton);
+        editImage = findViewById(R.id.imageCreatUser);
     }
 
     public void singUp(View view) {
@@ -87,7 +107,7 @@ public class create_user extends AppCompatActivity {
 
 
         if (isValidValues()) {
-            createUser(email, password, phone, dobString, introduce, gender);
+            createUser(email, password, phone, dobString, introduce, gender, urlString);
         } else {
             Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
         }
@@ -131,44 +151,16 @@ public class create_user extends AppCompatActivity {
     }
 
     // 회원가입
-    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
+    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender, String picture) {
         myRef = database.getReference("User");
 
        // Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> userValue = null;
 
-        User user = new User(email, phone, gender, dob, introduce);
+        User user = new User(email, phone, gender, dob, introduce, picture);
         userValue = user.toMap();
 
-        //childUpdates.put("", userValue);
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.v("testx2", snapshot.getKey());
-//                    Log.v("testx3", snapshot.getValue().toString());
-//                    Log.v("testx4", snapshot.getChildrenCount()+"");
-//                }
-                Log.v("testx2", dataSnapshot.getKey());
-                Log.v("testx3", dataSnapshot.getValue().toString());
-                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
-//                Object user = dataSnapshot.getValue(Object.class);
-//                Log.v("testx2", user.toString());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
+        uploadFile();
         myRef.push().updateChildren(userValue);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -216,4 +208,81 @@ public class create_user extends AppCompatActivity {
         dialog.getDatePicker().setMaxDate(new Date().getTime());    //입력한 날짜 이후로 클릭 안되게 옵션
         dialog.show();
     }
+
+    public void onClickImage(View view){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+    }
+
+    //결과 처리
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
+        if(requestCode == 0 && resultCode == RESULT_OK){
+            filePath = data.getData();
+            try {
+                //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                editImage.setImageBitmap(bitmap);
+
+                //Unique한 파일명을 만들자.
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+                Date now = new Date();
+                filename = formatter.format(now) + ".png";
+                urlString = "gs://studyforfirebase-901d2.appspot.com";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //upload the file
+    private void uploadFile() {
+        //업로드할 파일이 있으면 수행
+        if (filePath != null) {
+            //업로드 진행 Dialog 보이기
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("업로드중...");
+            progressDialog.show();
+
+            //storage
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            //storage 주소와 폴더 파일명을 지정해 준다.
+            StorageReference storageRef = storage.getReferenceFromUrl(urlString).child("images/" + filename);
+            //올라가거라...
+            storageRef.putFile(filePath)
+                    //성공시
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                        }
+                    })
+                    //실패시
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    //진행중
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
+                            //dialog에 진행률을 퍼센트로 출력해 준다
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
+                        }
+                    });
+        } else {
+            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

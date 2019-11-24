@@ -2,7 +2,6 @@ package com.example.planb;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -12,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planb.models.User;
+import com.example.planb.models.guide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -22,10 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -140,8 +136,10 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        if(isValidEmail() && isValidPasswd()) {
+        if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
+        } else {
+            Toast.makeText(MainActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
     }
 

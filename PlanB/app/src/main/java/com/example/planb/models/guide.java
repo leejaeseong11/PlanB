@@ -1,4 +1,4 @@
-package com.example.planb;
+package com.example.planb.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.HashMap;

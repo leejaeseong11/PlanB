@@ -123,13 +123,13 @@ public class destination_regist extends AppCompatActivity {
         //uemail = user.getEmail();//유저 이메일 받는 변수
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
-        String keyvalue = "20191123";
+        String keyvalue = "20191230";
         if(add){
             guide post = new guide("nexon9093@gmail.com", area.getText().toString(), dateadd, ts.getText().toString(), price.getText().toString());
             postValues = post.toMap();
         }
 
-        String datekey = "";
+        String datekey = "kk";
         StringTokenizer st = new StringTokenizer(dateadd, "/");
         while(st.hasMoreTokens()) {
             datekey += st.nextToken();

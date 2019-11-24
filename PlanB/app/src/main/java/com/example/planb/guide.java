@@ -10,11 +10,11 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class guide{
-    public String email;
-    public String area;
-    public String date;
-    public String desc;
-    public String price;
+    private String email;
+    private String area;
+    private String date;
+    private String desc;
+    private String price;
 
     public guide(){}
 
@@ -37,4 +37,43 @@ public class guide{
         return result;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 }

@@ -55,7 +55,7 @@ public class destination_search extends AppCompatActivity {
         setsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(destination_search.this, guide_list.class);
+                Intent intent = new Intent(getApplicationContext(), guide_list.class);
                 intent.putExtra("REGION", search.getText().toString());
                 intent.putExtra("SET_DATE", setdate.getText().toString());
                 startActivity(intent);
@@ -87,5 +87,6 @@ public class destination_search extends AppCompatActivity {
 //                startActivity(intent);
 //                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

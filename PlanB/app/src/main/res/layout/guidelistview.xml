@@ -14,7 +14,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/getdate"
-            android:text="'yyyy-mm-dd'"
+            android:text="'날짜'"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/getregion"
+            android:text="'지역'"
             android:textSize="20sp"/>
         <TextView
             android:layout_width="wrap_content"

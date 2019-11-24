@@ -61,7 +61,7 @@ import java.util.ArrayList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView guideface;
-        TextView guidename;
+        TextView guidemail;
         TextView guidecost;
         TextView guidecont;
         TextView guidedesc;
@@ -72,7 +72,7 @@ import java.util.ArrayList;
             super(itemView);
 
             guideface = itemView.findViewById(R.id.guideface);
-            guidename = itemView.findViewById(R.id.guidename);
+            guidemail = itemView.findViewById(R.id.guidemail);
             guidecost = itemView.findViewById(R.id.guidecost);
             guidecont = itemView.findViewById(R.id.guidecont);
             guidedesc = itemView.findViewById(R.id.guidedesc);
@@ -90,8 +90,9 @@ import java.util.ArrayList;
 
         /*이거 절대 추가해*/
         public void setItem(guide item) {
+            guidemail.setText(item.getEmail());
             guidecost.setText(item.getPrice());
-            guidecont.setText(item.getEmail());
+            guidecont.setText(item.getEmail());//연락처 받기
             guidedesc.setText(item.getDesc());
         }
         ///////////////////////////////////////////////////////////////////////////

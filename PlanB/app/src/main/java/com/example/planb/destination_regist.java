@@ -2,6 +2,7 @@ package com.example.planb;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,8 @@ public class destination_regist extends AppCompatActivity {
     private int date;
     private String dateadd;
     private String uemail;
+    private String uphone;
+    private Uri uimage;
     private Date FirstDate;
     long calDateDays;
     long calDate;
@@ -113,14 +116,17 @@ public class destination_regist extends AppCompatActivity {
                             dateadd =  datef.format(date1) ;
                             postFirebaseDatabase(true);
                         }
-                    finish();
+                    //finish();
                 }
             });
 
     }
     public void postFirebaseDatabase(boolean add){
         mPostReference = FirebaseDatabase.getInstance().getReference();
-        //uemail = user.getEmail();//유저 이메일 받는 변수
+        uemail = user.getEmail();//유저 이메일 받는 변수
+        uphone = user.getPhoneNumber();
+        uimage = user.getPhotoUrl();
+        Toast.makeText(getApplicationContext(),uemail+uphone+uimage, Toast.LENGTH_SHORT).show();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         String keyvalue = "20191230";

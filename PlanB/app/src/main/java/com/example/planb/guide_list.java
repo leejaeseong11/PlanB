@@ -7,15 +7,24 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.planb.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class guide_list extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -25,6 +34,7 @@ public class guide_list extends AppCompatActivity {
     private TextView region;
     DatabaseReference myRef;
     FirebaseDatabase database;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -33,6 +43,7 @@ public class guide_list extends AppCompatActivity {
         date = findViewById(R.id.getdate);
         region = findViewById(R.id.getregion);
         database = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         myRef = database.getReference();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,43 +96,62 @@ public class guide_list extends AppCompatActivity {
             }
         });
     }
-//    public void getFirebaseDatabase() {
-//        myRef = database.getReference();
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                arrayData.clear();
-//                arrayIndex.clear();
+    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
+        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
+
+        // Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> userValue = null;
+
+        User user = new User(email, phone, gender, dob, introduce);
+        userValue = user.toMap();
+
+        //childUpdates.put("", userValue);
+        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
 //                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    String key = snapshot.getKey();
-//
-//                    guide get = dataSnapshot.getValue(guide.class);
-//                    String[] info = {get.area, get.email, get.price, get.desc};
-//                    String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) + setTextLength(info[3], 10);
-//
-//                    if (key == "20191123") {
-//                        arrayData.add(Result);
-//                        arrayIndex.add(key);
-//                    }
-//                }
-//                arrayAdapter.clear();
-//                arrayAdapter.addAll(arrayData);
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//    public String setTextLength(String text, int length) {
-//         if (text.length() < length) {
-//            int gap = length - text.length();
-//            for (int i = 0; i < gap; i++) {
-//                text = text + " ";
-//            }
-//         }
-//    return text;
-//    }
+//                    Log.v("testx2", snapshot.getKey());
+//                    Log.v("testx3", snapshot.getValue().toString());
+//                    Log.v("testx4", snapshot.getChildrenCount()+"");
+//                }--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
+                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
+                Log.v("testx2", dataSnapshot.getKey());
+                Log.v("testx3", dataSnapshot.getValue().toString());
+                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
+                if (dataSnapshot.exists());
+//                Object user = dataSnapshot.getValue(Object.class);
+//                Log.v("testx2", user.toString());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        myRef.push().updateChildren(userValue);
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // 회원가입 성공
+                            //Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            // 회원가입 실패
+                            //Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 }

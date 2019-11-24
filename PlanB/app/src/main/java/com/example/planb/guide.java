@@ -1,25 +1,26 @@
 package com.example.planb;
-
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class guide{
+public class guide {
     private String email;
+    private String photo;
+    private String phone;
     private String area;
     private String date;
     private String desc;
     private String price;
 
-    public guide(){}
+    public guide() {
+    }
 
-    public guide(String email, String area, String date, String desc, String price) {
+    public guide(String email, String photo, String phone, String area, String date, String desc, String price) {
         this.area = area;
+        this.photo = photo;
+        this.phone = phone;
         this.date = date;
         this.desc = desc;
         this.price = price;
@@ -30,6 +31,8 @@ public class guide{
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("area", area);
+        result.put("photo", photo);
+        result.put("phone", phone);
         result.put("date", date);
         result.put("desc", desc);
         result.put("price", price);
@@ -76,4 +79,12 @@ public class guide{
     public void setPrice(String price) {
         this.price = price;
     }
+
+    public String getPhoto() { return photo; }
+
+    public void setPhoto(String photo) { this.photo = photo; }
+
+    public String getPhone() { return phone; }
+
+    public void setPhone(String phone) { this.phone = phone; }
 }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.planb.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -139,14 +140,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSigninButtonClicked(View view) {
-//        email = editTextEmail.getText().toString();
-//        password = editTextPassword.getText().toString();
-//
-//        if(isValidEmail() && isValidPasswd()) {
-//            loginUser(email, password);
-//        }
-        for (int i = 0; i < users.size(); ++i)
-            Log.v("testx", users.get(i).toString());
+        email = editTextEmail.getText().toString();
+        password = editTextPassword.getText().toString();
+
+        if(isValidEmail() && isValidPasswd()) {
+            loginUser(email, password);
+        }
     }
 
     public void onSignUpButtonClicked(View view) {

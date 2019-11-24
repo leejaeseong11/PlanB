@@ -9,7 +9,5 @@ public class selected_guide extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guide_select);
-
-
     }
 }

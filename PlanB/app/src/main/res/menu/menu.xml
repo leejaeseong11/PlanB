@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/registerdestination"
+        android:title="여행지등록" />
+    <item
+        android:id="@+id/myinfo"
+        android:title="내 정보"/>
+    <item
+        android:id="@+id/logout"
+        android:title="로그아웃"/>
+    <item
+        android:id="@+id/myregister"
+        android:title="내 여행지"/>
+</menu>

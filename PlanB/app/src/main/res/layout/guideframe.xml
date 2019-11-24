@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="30sp">
 
     <LinearLayout
@@ -19,7 +19,8 @@
             <ImageView
                 android:layout_width="101dp"
                 android:layout_height="83dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/guideface"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,11 +28,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/guidename"
+                    android:id="@+id/guidemail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20sp"
-                    android:text="Guide_Name"
+                    android:text="Guide_email"
                     android:textSize="20sp" />
 
                 <TextView

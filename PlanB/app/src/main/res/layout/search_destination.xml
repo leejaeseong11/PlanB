@@ -71,19 +71,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/sdate"
+        <TextView
+            android:id="@+id/setdate"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:background="#ffffff"
-            android:hint="2019-10-10"
-            android:inputType="date" />
+            android:hint="날짜를 선택하세요"
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
 
         <Button
             android:layout_width="63dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:text="검색"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:id="@+id/setsearch"/>
     </LinearLayout>
 
     <LinearLayout

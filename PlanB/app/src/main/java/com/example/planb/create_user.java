@@ -26,9 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -101,7 +98,7 @@ public class create_user extends AppCompatActivity {
         email = "test" + new Random().nextInt() + "@d.com";
         password = "password12!";
         phone = "01088888888";
-        dobString = "19991225";
+        dobString = "19991228";
         gender = 'F';
         introduce = "안녕하세요~~ 미라지예요~~";
         boolean flag = uploadFile();

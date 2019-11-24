@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<User> users = new ArrayList<>();
-
+    public static ArrayList<guide> guides = new ArrayList<>();
     // 비밀번호 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
 
@@ -96,33 +96,30 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        FirebaseDatabase.getInstance().getReference().child("User").addChildEventListener(new ChildEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Guide").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                User user = new User();
+                guide guide = new guide();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     switch (snapshot.getKey()) {
-                        case "date_of_birth" :
-                            user.setDob(snapshot.getValue().toString());
+                        case "area" :
+                            guide.setArea(snapshot.getValue().toString());
+                            break;
+                        case "date" :
+                            guide.setDate(snapshot.getValue().toString());
+                            break;
+                        case "desc" :
+                            guide.setDesc(snapshot.getValue().toString());
                             break;
                         case "email" :
-                            user.setEmail(snapshot.getValue().toString());
+                            guide.setEmail(snapshot.getValue().toString());
                             break;
-                        case "gender" :
-                            user.setGender(snapshot.getValue().toString().charAt(0));
-                            break;
-                        case "introduce" :
-                            user.setIntroduce(snapshot.getValue().toString());
-                            break;
-                        case "phone" :
-                            user.setPhone(snapshot.getValue().toString());
-                            break;
-                        case "picture" :
-                            user.setPicture(snapshot.getValue().toString());
+                        case "price" :
+                            guide.setPrice(snapshot.getValue().toString());
                             break;
                     }
                 }
-                users.add(user);
+                guides.add(guide);
             }
 
             @Override

@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.planb.models.Mixedguideframe;
 import com.example.planb.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 
@@ -30,11 +34,13 @@ public class guide_list extends AppCompatActivity {
     private RecyclerView recyclerView;
     private guide_adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private TextView date;
-    private TextView region;
+    TextView date;
+    TextView region;
     DatabaseReference myRef;
     FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
+    public static String sendate;
+    public static String sendregion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -61,7 +67,8 @@ public class guide_list extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-
+        sendate = intent.getStringExtra("SET_DATE");
+        sendregion = intent.getStringExtra("REGION");
         if(intent!=null){
             date.setText(intent.getStringExtra("REGION"));
             region.setText(intent.getStringExtra("SET_DATE"));
@@ -75,6 +82,17 @@ public class guide_list extends AppCompatActivity {
         mAdapter = new guide_adapter(getApplicationContext());
         recyclerView.setAdapter(mAdapter);
 
+
+        for(int i = 0; i < MainActivity.guides.size(); i++) {
+            if(guide_list.sendate.equals(MainActivity.guides.get(i).getDate()) && guide_list.sendregion.equals(MainActivity.guides.get(i).getArea())) {
+                for(int j = 0; j < MainActivity.users.size(); j++) {
+                    if(MainActivity.users.get(j).email.equals(MainActivity.guides.get(i).getEmail())) {
+
+                        mAdapter.addItem(new Mixedguideframe(MainActivity.guides.get(i).getEmail(), MainActivity.users.get(j).picture , MainActivity.users.get(j).phone, MainActivity.guides.get(i).getDesc(), MainActivity.guides.get(i).getPrice()));
+                    }
+                }
+            }
+        }
 
         //디비에서 정보 받아오면 addItem 사용해서 어댑터에 가이드 추가
 //        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 예뻐요","190000"));
@@ -91,67 +109,67 @@ public class guide_list extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new guide_adapter.OnItemClickListener() {
             @Override
             public void onItemClick(guide_adapter.ViewHolder holder, View view, int position) {
-                guide item = mAdapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "해당 가이드 지역이 선택됨==> " + item.getArea(), Toast.LENGTH_SHORT).show();
+                Mixedguideframe item = mAdapter.getItem(position);
+                //Toast.makeText(getApplicationContext(), "해당 가이드 지역이 선택됨==> " + item.getArea(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-//    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
-//        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
-//
-//        // Map<String, Object> childUpdates = new HashMap<>();
-//        Map<String, Object> userValue = null;
-//
+    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
+        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
+
+        // Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> userValue = null;
+
 //        User user = new User(email, phone, gender, dob, introduce);
 //        userValue = user.toMap();
-//
-//        //childUpdates.put("", userValue);
-//        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-////                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-////                    Log.v("testx2", snapshot.getKey());
-////                    Log.v("testx3", snapshot.getValue().toString());
-////                    Log.v("testx4", snapshot.getChildrenCount()+"");
-////                }--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
-//                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
-//                Log.v("testx2", dataSnapshot.getKey());
-//                Log.v("testx3", dataSnapshot.getValue().toString());
-//                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
-//                if (dataSnapshot.exists());
-////                Object user = dataSnapshot.getValue(Object.class);
-////                Log.v("testx2", user.toString());
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
-//
-//        myRef.push().updateChildren(userValue);
-//
-//        firebaseAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // 회원가입 성공
-//                            //Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-//                            finish();
-//                        } else {
-//                            // 회원가입 실패
-//                            //Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
+
+        //childUpdates.put("", userValue);
+        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Log.v("testx2", snapshot.getKey());
+//                    Log.v("testx3", snapshot.getValue().toString());
+//                    Log.v("testx4", snapshot.getChildrenCount()+"");
+//                }--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
+                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
+                Log.v("testx2", dataSnapshot.getKey());
+                Log.v("testx3", dataSnapshot.getValue().toString());
+                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
+                if (dataSnapshot.exists());
+//                Object user = dataSnapshot.getValue(Object.class);
+//                Log.v("testx2", user.toString());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        myRef.push().updateChildren(userValue);
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // 회원가입 성공
+                            //Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            // 회원가입 실패
+                            //Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 }

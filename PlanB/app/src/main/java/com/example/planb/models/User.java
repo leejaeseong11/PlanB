@@ -16,7 +16,7 @@ public class User {
     public Character gender;     // M, F
     public String dob;      // YYYY-MM-DD
     public String introduce;
-    public Drawable picture;
+    public String picture;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)

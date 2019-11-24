@@ -77,11 +77,11 @@ public class guide_list extends AppCompatActivity {
 
 
         //디비에서 정보 받아오면 addItem 사용해서 어댑터에 가이드 추가
-        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 예뻐요","190000"));
-        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 매력있어","190000"));
-        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 멋져","190000"));
-        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","암 소 소 소","190000"));
-        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","핫핫","190000"));
+//        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 예뻐요","190000"));
+//        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 매력있어","190000"));
+//        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","난 너무 멋져","190000"));
+//        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","암 소 소 소","190000"));
+//        mAdapter.addItem(new guide("n@gmail.com","대전","2019/11/23","핫핫","190000"));
 
         //어댑터에 연결
         recyclerView.setAdapter(mAdapter);

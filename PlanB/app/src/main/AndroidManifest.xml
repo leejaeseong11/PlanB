@@ -18,6 +18,10 @@
         </activity>
         <activity android:name=".create_user"
             android:label="Create User" />
+        <activity android:name=".destination_search"
+            android:label="Destination Search"/>
+        <activity android:name=".destination_regist"
+            android:label="Destination Regist"/>
     </application>
 
 </manifest>

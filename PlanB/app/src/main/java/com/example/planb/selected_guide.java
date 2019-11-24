@@ -69,7 +69,6 @@ public class selected_guide extends AppCompatActivity {
                     filename = st.nextToken();
                 }
                 StorageReference ref = FirebaseStorage.getInstance().getReference("images/"+filename);
-
                 Glide.with(imageview).load(ref).into(imageview);
             }
         }

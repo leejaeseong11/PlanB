@@ -101,7 +101,7 @@ public class create_user extends AppCompatActivity {
         email = "test" + new Random().nextInt() + "@d.com";
         password = "password12!";
         phone = "01088888888";
-        dobString = "19991225";
+        dobString = "19991228";
         gender = 'F';
         introduce = "안녕하세요~~ 미라지예요~~";
         boolean flag = uploadFile();

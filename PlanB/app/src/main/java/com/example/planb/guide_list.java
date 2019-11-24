@@ -102,8 +102,8 @@ public class guide_list extends AppCompatActivity {
         // Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> userValue = null;
 
-        User user = new User(email, phone, gender, dob, introduce);
-        userValue = user.toMap();
+//        User user = new User(email, phone, gender, dob, introduce);
+//        userValue = user.toMap();
 
         //childUpdates.put("", userValue);
         //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용

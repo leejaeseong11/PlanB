@@ -87,6 +87,7 @@ public class guide_list extends AppCompatActivity {
                 for(int j = 0; j < MainActivity.users.size(); j++) {
                     if(MainActivity.users.get(j).email.equals(MainActivity.guides.get(i).getEmail())) {
                         mAdapter.addItem(new Mixedguideframe(MainActivity.guides.get(i).getEmail(), MainActivity.users.get(j).picture , MainActivity.users.get(j).phone, MainActivity.guides.get(i).getDesc(), MainActivity.guides.get(i).getPrice()));
+                        break;
                     }
                 }
             }
@@ -100,7 +101,13 @@ public class guide_list extends AppCompatActivity {
             @Override
             public void onItemClick(guide_adapter.ViewHolder holder, View view, int position) {
                 Mixedguideframe item = mAdapter.getItem(position);
-                Toast.makeText(getApplicationContext(),position,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), selected_guide.class);
+                intent.putExtra("SEND_EMAIL", holder.guidemail.getText());
+                intent.putExtra("SEND_DATE", guide_list.sendate);
+                intent.putExtra("SEND_REGION", guide_list.sendregion);
+                intent.putExtra("SEND_PRICE", holder.guidecost.getText());
+                startActivity(intent);
                 //Toast.makeText(getApplicationContext(), "해당 가이드 지역이 선택됨==> " + item.getArea(), Toast.LENGTH_SHORT).show();
             }
         });

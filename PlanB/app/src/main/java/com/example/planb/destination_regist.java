@@ -134,7 +134,6 @@ public class destination_regist extends AppCompatActivity {
                     dateadd = datef.format(date1);
                     postFirebaseDatabase(true);
                 }
-                Toast.makeText(getApplicationContext(), uemail + uphone + uimage, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -147,18 +146,17 @@ public class destination_regist extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         String keyvalue = "20191230";
-        createUser();
         if (add) {
-            guide post = new guide(uemail, uimage, uphone, area.getText().toString(), dateadd, ts.getText().toString(), price.getText().toString());
+            guide post = new guide(uemail, area.getText().toString(), dateadd, ts.getText().toString(), price.getText().toString());
             postValues = post.toMap();
         }
 
-        String datekey = "kk";
+        String datekey = user.getUid();
         StringTokenizer st = new StringTokenizer(dateadd, "/");
         while (st.hasMoreTokens()) {
             datekey += st.nextToken();
         }
-        childUpdates.put("/key_list/" + datekey, postValues);
+        childUpdates.put("/Guide/" + datekey, postValues);
         mPostReference.updateChildren(childUpdates);
     }
 
@@ -181,125 +179,4 @@ public class destination_regist extends AppCompatActivity {
             // 예외 처리
         }
     }
-
-    private void createUser() {
-        FirebaseDatabase.getInstance().getReference().child("User").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Log.v("testx456", dataSnapshot.getValue().toString());
-                for (DataSnapshot p : dataSnapshot.getChildren()) {
-                    Log.v("testx3", dataSnapshot.getValue().toString());
-                    String key = p.getKey();
-                    User get = p.getValue(User.class);
-                    Log.v("testx4", dataSnapshot.getValue().toString());
-                    String[] info = {get.email, get.phone, get.picture};
-                   // String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) + setTextLength(info[3], 10);
-                    //Log.d("getFirebaseDatabase", "key: " + key);
-                    Log.v("testx5", dataSnapshot.getValue().toString());
-                    if (uemail.equals(info[0])) {
-                        uphone = info[1];
-                        uimage = info[2];
-                    }
-                    Log.v("testx6", info[0] + ", " + info[1] + ", " + info[2]);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-//        myRef = database.getReference();
-//        Query myTopPostsQuery = myRef.child("User").orderByChild("email");
-//        myTopPostsQuery.addListenerForSingleValueEvent(
-//                new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                            User get = postSnapshot.getValue(User.class);
-//                            String[] info = {get.email, get.phone, get.picture};
-//                            String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) + setTextLength(info[3], 10);
-//                            //Log.d("getFirebaseDatabase", "key: " + key);
-//                            if (uemail.equals(info[0])) {
-//                                uphone = info[1];
-//                                uimage = info[2];
-//                            }
-//                            Log.v("testx", info[0] + ", " + info[1] + ", " + info[2]);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.w("testx", "getUser:onCancelled", databaseError.toException());
-//                    }
-//                });
-//        Log.v("testx", myTopPostsQuery.toString());
-
-//        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
-//
-//        //childUpdates.put("", userValue);Query@2fb7130
-//        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-//                    String key = postSnapshot.getKey();
-//                    User get = postSnapshot.getValue(User.class);
-//                    String[] info = {get.email, get.phone, get.picture};
-//                    String Result = setTextLength(info[0],10) + setTextLength(info[1],10) + setTextLength(info[2],10) + setTextLength(info[3],10);
-//                    Log.d("getFirebaseDatabase", "key: " + key);
-//                    if(uemail == info[0]){
-//                        uphone = info[1];
-//                        uimage = info[2];
-//                    }
-//                }//--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
-//                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
-//                Log.v("testx2", dataSnapshot.getKey());
-//                Log.v("testx3", dataSnapshot.getValue().toString());
-//                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
-//                if (dataSnapshot.exists());
-////                Object user = dataSnapshot.getValue(Object.class);
-////                Log.v("testx2", user.toString());
-//            }
-//            public String setTextLength(String text, int length){
-//                if(text.length()<length){
-//                    int gap = length - text.length();
-//                    for (int i=0; i<gap; i++){
-//                        text = text + " ";
-//                    }
-//                }
-//                return text;
-//            }
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
-
-    }
-
-    public String setTextLength(String text, int length) {
-        if (text.length() < length) {
-            int gap = length - text.length();
-            for (int i = 0; i < gap; i++) {
-                text = text + " ";
-            }
-        }
-        return text;
-    }
-
 }

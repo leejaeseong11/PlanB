@@ -22,6 +22,10 @@
             android:label="Destination Search"/>
         <activity android:name=".destination_regist"
             android:label="Destination Regist"/>
+        <activity android:name=".guide_list"
+            android:label="guide_list"/>
+        <activity android:name=".selected_guide"
+            android:label="Selected Guide"/>
     </application>
 
 </manifest>

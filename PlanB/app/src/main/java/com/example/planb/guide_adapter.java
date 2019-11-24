@@ -10,10 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.example.planb.models.Mixedguideframe;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-    public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder> {
-    private ArrayList<guide> listData = new ArrayList<>();
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder> {
+    private ArrayList<Mixedguideframe> listData = new ArrayList<>();
     Context context;
     OnItemClickListener listener;
     public  static interface  OnItemClickListener{
@@ -41,18 +47,18 @@ import java.util.ArrayList;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int position) {
-        guide item = listData.get(position); //리사이클러뷰에서 몇번쨰게 지금 보여야되는시점이다 알려주기위해
+        Mixedguideframe item = listData.get(position); //리사이클러뷰에서 몇번쨰게 지금 보여야되는시점이다 알려주기위해
         viewholder.setItem(item); //그거를 홀더에넣어서 뷰홀더가 데이터를 알 수 있게되서 뷰홀더에 들어가있는 뷰에다가 데이터 설정할 수 있음
         //클릭리스너
         viewholder.setOnItemClickListener(listener);
     }
-    public void addItem(guide g){
+    public void addItem(Mixedguideframe g){
         listData.add(g);
     }
-    public void addItems(ArrayList<guide> items){
+    public void addItems(ArrayList<Mixedguideframe> items){
         this.listData = items;
     }
-    public guide getItem(int position){
+    public Mixedguideframe getItem(int position){
         return listData.get(position);
     }
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -88,14 +94,26 @@ import java.util.ArrayList;
             });
         }
 
+
         /*이거 절대 추가해*/
-        public void setItem(guide item) {
+        public void setItem(Mixedguideframe item) {
             guidemail.setText(item.getEmail());
             guidecost.setText(item.getPrice());
             guidecont.setText(item.getEmail());//연락처 받기
             guidedesc.setText(item.getDesc());
+
+            String tmp = item.getPhoto();
+            StringTokenizer st = new StringTokenizer(tmp, "/");
+            String filename="";
+            while(st.hasMoreTokens()) {
+                filename = st.nextToken();
+            }
+            StorageReference ref = FirebaseStorage.getInstance().getReference("images/"+filename);
+
+            Glide.with(guideface).load(ref).into(guideface);
         }
-        ///////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////
+        ///////////////////////////////////////
         public void setOnItemClickListener(OnItemClickListener listener) {
             this.listener = listener;
         }

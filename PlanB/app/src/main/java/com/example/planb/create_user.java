@@ -104,8 +104,7 @@ public class create_user extends AppCompatActivity {
         dobString = "19991225";
         gender = 'F';
         introduce = "안녕하세요~~ 미라지예요~~";
-
-
+        uploadFile();
         if (isValidValues()) {
             createUser(email, password, phone, dobString, introduce, gender, urlString);
         } else {
@@ -153,14 +152,11 @@ public class create_user extends AppCompatActivity {
     // 회원가입
     private void createUser(String email, String password, String phone, String dob, String introduce, Character gender, String picture) {
         myRef = database.getReference("User");
-
        // Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> userValue = null;
 
         User user = new User(email, phone, gender, dob, introduce, picture);
         userValue = user.toMap();
-
-        uploadFile();
         myRef.push().updateChildren(userValue);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -228,11 +224,6 @@ public class create_user extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 editImage.setImageBitmap(bitmap);
 
-                //Unique한 파일명을 만들자.
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-                Date now = new Date();
-                filename = formatter.format(now) + ".png";
-                urlString = "gs://studyforfirebase-901d2.appspot.com";
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -242,31 +233,33 @@ public class create_user extends AppCompatActivity {
     //upload the file
     private void uploadFile() {
         //업로드할 파일이 있으면 수행
+        Log.v("uploadImage", "업로드 진입");
         if (filePath != null) {
-            //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
-            progressDialog.show();
 
             //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
+            //Unique한 파일명을 만들자.
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+            Date now = new Date();
+            filename = formatter.format(now) + ".png";
+            urlString = "gs://planb-32e2f.appspot.com/images/" + filename;
+
             //storage 주소와 폴더 파일명을 지정해 준다.
-            StorageReference storageRef = storage.getReferenceFromUrl(urlString).child("images/" + filename);
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://planb-32e2f.appspot.com").child("images/" + filename);
             //올라가거라...
             storageRef.putFile(filePath)
                     //성공시
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+
+
                         }
                     })
-                    //실패시
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -274,10 +267,6 @@ public class create_user extends AppCompatActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
                         }
                     });
         } else {

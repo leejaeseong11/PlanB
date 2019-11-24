@@ -96,62 +96,62 @@ public class guide_list extends AppCompatActivity {
             }
         });
     }
-    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
-        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
-
-        // Map<String, Object> childUpdates = new HashMap<>();
-        Map<String, Object> userValue = null;
-
-        User user = new User(email, phone, gender, dob, introduce);
-        userValue = user.toMap();
-
-        //childUpdates.put("", userValue);
-        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.v("testx2", snapshot.getKey());
-//                    Log.v("testx3", snapshot.getValue().toString());
-//                    Log.v("testx4", snapshot.getChildrenCount()+"");
-//                }--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
-                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
-                Log.v("testx2", dataSnapshot.getKey());
-                Log.v("testx3", dataSnapshot.getValue().toString());
-                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
-                if (dataSnapshot.exists());
-//                Object user = dataSnapshot.getValue(Object.class);
-//                Log.v("testx2", user.toString());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
-        myRef.push().updateChildren(userValue);
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // 회원가입 성공
-                            //Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            // 회원가입 실패
-                            //Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+//    private void createUser(String email, String password, String phone, String dob, String introduce, Character gender) {
+//        myRef = database.getReference("User");//"User"에서 시작하겠다는 뜻.
+//
+//        // Map<String, Object> childUpdates = new HashMap<>();
+//        Map<String, Object> userValue = null;
+//
+//        User user = new User(email, phone, gender, dob, introduce);
+//        userValue = user.toMap();
+//
+//        //childUpdates.put("", userValue);
+//        //myRef.child("guide").addChildEventListener-->그 데이터 베이스에서 작용
+//        myRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+////                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+////                    Log.v("testx2", snapshot.getKey());
+////                    Log.v("testx3", snapshot.getValue().toString());
+////                    Log.v("testx4", snapshot.getChildrenCount()+"");
+////                }--> 모델안에있는것이 차례대로 돌음. getKEy검사해서 키가 지역, 날짜인거 비교해서 가져요기
+//                //가져올떄 getvalue tostring 해서 가져와도 되고, 아니면은
+//                Log.v("testx2", dataSnapshot.getKey());
+//                Log.v("testx3", dataSnapshot.getValue().toString());
+//                Log.v("testx4", dataSnapshot.getChildrenCount()+"");
+//                if (dataSnapshot.exists());
+////                Object user = dataSnapshot.getValue(Object.class);
+////                Log.v("testx2", user.toString());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//        });
+//
+//        myRef.push().updateChildren(userValue);
+//
+//        firebaseAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // 회원가입 성공
+//                            //Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+//                            finish();
+//                        } else {
+//                            // 회원가입 실패
+//                            //Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 }

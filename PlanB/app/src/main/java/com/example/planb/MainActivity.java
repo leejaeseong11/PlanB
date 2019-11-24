@@ -2,6 +2,7 @@ package com.example.planb;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -10,14 +11,25 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.planb.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+    public static ArrayList<User> users = new ArrayList<>();
+
     // 비밀번호 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
 
@@ -40,15 +52,101 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+
+        FirebaseDatabase.getInstance().getReference().child("User").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                User user = new User();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    switch (snapshot.getKey()) {
+                        case "date_of_birth" :
+                            user.setDob(snapshot.getValue().toString());
+                            break;
+                        case "email" :
+                            user.setEmail(snapshot.getValue().toString());
+                            break;
+                        case "gender" :
+                            user.setGender(snapshot.getValue().toString().charAt(0));
+                            break;
+                        case "introduce" :
+                            user.setIntroduce(snapshot.getValue().toString());
+                            break;
+                        case "phone" :
+                            user.setPhone(snapshot.getValue().toString());
+                            break;
+                        case "picture" :
+                            user.setPicture(snapshot.getValue().toString());
+                            break;
+                    }
+                }
+                users.add(user);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("User").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                User user = new User();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    switch (snapshot.getKey()) {
+                        case "date_of_birth" :
+                            user.setDob(snapshot.getValue().toString());
+                            break;
+                        case "email" :
+                            user.setEmail(snapshot.getValue().toString());
+                            break;
+                        case "gender" :
+                            user.setGender(snapshot.getValue().toString().charAt(0));
+                            break;
+                        case "introduce" :
+                            user.setIntroduce(snapshot.getValue().toString());
+                            break;
+                        case "phone" :
+                            user.setPhone(snapshot.getValue().toString());
+                            break;
+                        case "picture" :
+                            user.setPicture(snapshot.getValue().toString());
+                            break;
+                    }
+                }
+                users.add(user);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     public void onSigninButtonClicked(View view) {
-        email = editTextEmail.getText().toString();
-        password = editTextPassword.getText().toString();
-
-        if(isValidEmail() && isValidPasswd()) {
-            loginUser(email, password);
-        }
+//        email = editTextEmail.getText().toString();
+//        password = editTextPassword.getText().toString();
+//
+//        if(isValidEmail() && isValidPasswd()) {
+//            loginUser(email, password);
+//        }
+        for (int i = 0; i < users.size(); ++i)
+            Log.v("testx", users.get(i).toString());
     }
 
     public void onSignUpButtonClicked(View view) {

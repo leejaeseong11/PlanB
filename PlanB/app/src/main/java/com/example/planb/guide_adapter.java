@@ -1,6 +1,7 @@
 package com.example.planb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder
         Mixedguideframe item = listData.get(position); //리사이클러뷰에서 몇번쨰게 지금 보여야되는시점이다 알려주기위해
         viewholder.setItem(item); //그거를 홀더에넣어서 뷰홀더가 데이터를 알 수 있게되서 뷰홀더에 들어가있는 뷰에다가 데이터 설정할 수 있음
         //클릭리스너
+
         viewholder.setOnItemClickListener(listener);
     }
     public void addItem(Mixedguideframe g){
@@ -88,7 +90,14 @@ public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (listener != null) {
+
                         listener.onItemClick(ViewHolder.this, itemView, position);
+
+//                        Intent intent = new Intent(getApplicationContext(), selected_guide.class);
+//                        intent.putExtra("SEND_EMAIL", holder.guidemail.getText());
+//                        intent.putExtra("SEND_DATE", guide_list.sendate);
+//                        intent.putExtra("SEND_REGION", guide_list.sendregion);
+//                        intent.putExtra("SEND_PRICE", holder.guidecost.getText());
                     }
                 }
             });

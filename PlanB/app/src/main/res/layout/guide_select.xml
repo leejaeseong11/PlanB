@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:layout_margin="30sp">
 
-<TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
-        android:text="가이드 회원 이름"
-        android:textSize="40sp" />
+        android:text="선택하신 가이드"
+        android:textSize="40sp"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -77,7 +78,8 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/inputbox"
         android:text="가이드 소개글입니다. 저는 이 지역에서 20년간 살아온 토박이입니다. 누구보다 이지역의 숨은 맛집을 잘 알죠. 가격 흥정은 얼마든지 가능하니 누구나 편하게 연락주십시요."
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:id="@+id/desc"/>
 
     <Button
         android:id="@+id/select"

@@ -104,8 +104,8 @@ public class create_user extends AppCompatActivity {
         dobString = "19991225";
         gender = 'F';
         introduce = "안녕하세요~~ 미라지예요~~";
-        uploadFile();
-        if (isValidValues()) {
+        boolean flag = uploadFile();
+        if (isValidValues() && flag) {
             createUser(email, password, phone, dobString, introduce, gender, urlString);
         } else {
             Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -231,11 +231,9 @@ public class create_user extends AppCompatActivity {
     }
 
     //upload the file
-    private void uploadFile() {
+    private boolean uploadFile() {
         //업로드할 파일이 있으면 수행
-        Log.v("uploadImage", "업로드 진입");
         if (filePath != null) {
-
             //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -254,12 +252,13 @@ public class create_user extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-
                         }
                     })
+                    //실패시
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+
                             Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -269,8 +268,10 @@ public class create_user extends AppCompatActivity {
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         }
                     });
+            return true;
         } else {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 

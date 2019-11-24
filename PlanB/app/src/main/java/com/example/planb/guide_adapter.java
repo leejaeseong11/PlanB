@@ -93,11 +93,7 @@ public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder
                     if (listener != null) {
 
                         listener.onItemClick(ViewHolder.this, itemView, position);
-//                        Intent intent = new Intent(getApplicationContext(), selected_guide.class);
-//                        intent.putExtra("SEND_EMAIL", holder.guidemail.getText());
-//                        intent.putExtra("SEND_DATE", guide_list.sendate);
-//                        intent.putExtra("SEND_REGION", guide_list.sendregion);
-//                        intent.putExtra("SEND_PRICE", holder.guidecost.getText());
+
                     }
                 }
             });

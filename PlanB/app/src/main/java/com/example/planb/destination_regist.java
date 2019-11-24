@@ -186,7 +186,21 @@ public class destination_regist extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("User").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Log.v("testx", dataSnapshot.getValue().toString());
+                Log.v("testx456", dataSnapshot.getValue().toString());
+                for (DataSnapshot p : dataSnapshot.getChildren()) {
+                    Log.v("testx3", dataSnapshot.getValue().toString());
+                    User get = p.getValue(User.class);
+                    Log.v("testx4", dataSnapshot.getValue().toString());
+                    String[] info = {get.email, get.phone, get.picture};
+                   // String Result = setTextLength(info[0], 10) + setTextLength(info[1], 10) + setTextLength(info[2], 10) + setTextLength(info[3], 10);
+                    //Log.d("getFirebaseDatabase", "key: " + key);
+                    Log.v("testx5", dataSnapshot.getValue().toString());
+                    if (uemail.equals(info[0])) {
+                        uphone = info[1];
+                        uimage = info[2];
+                    }
+                    Log.v("testx6", info[0] + ", " + info[1] + ", " + info[2]);
+                }
             }
 
             @Override

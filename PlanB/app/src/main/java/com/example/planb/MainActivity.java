@@ -1,5 +1,6 @@
 package com.example.planb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String email = "";
     private String password = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +38,20 @@ public class MainActivity extends AppCompatActivity {
 
         // 파이어베이스 인증 객체 선언
         firebaseAuth = FirebaseAuth.getInstance();
-
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
     }
 
-    public void signIn(View view) {
+    public void onSigninButtonClicked(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
         if(isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
         }
+    }
+
+    public void onSignUpButtonClicked(View view) {
+        Intent intent = new Intent(this, create_user.class);
+        startActivity(intent);
     }
 
     // 이메일 유효성 검사

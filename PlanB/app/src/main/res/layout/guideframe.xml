@@ -4,12 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="30sp">
+    android:layout_margin="30sp"
+    android:background="@drawable/edge"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +23,8 @@
                 android:layout_width="101dp"
                 android:layout_height="83dp"
                 android:src="@mipmap/ic_launcher"
-                android:id="@+id/guideface"/>
+                android:id="@+id/guideface"
+                android:layout_gravity="center"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

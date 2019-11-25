@@ -87,7 +87,6 @@ public class guide_list extends AppCompatActivity {
                 for(int j = 0; j < MainActivity.users.size(); j++) {
                     if(MainActivity.users.get(j).email.equals(MainActivity.guides.get(i).getEmail())) {
                         mAdapter.addItem(new Mixedguideframe(MainActivity.guides.get(i).getEmail(), MainActivity.users.get(j).picture , MainActivity.users.get(j).phone, MainActivity.guides.get(i).getDesc(), MainActivity.guides.get(i).getPrice()));
-                        break;
                     }
                 }
             }

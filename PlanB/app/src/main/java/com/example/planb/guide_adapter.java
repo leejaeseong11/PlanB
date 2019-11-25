@@ -104,7 +104,7 @@ public class guide_adapter extends RecyclerView.Adapter<guide_adapter.ViewHolder
         public void setItem(Mixedguideframe item) {
             guidemail.setText(item.getEmail());
             guidecost.setText(item.getPrice());
-            guidecont.setText(item.getEmail());//연락처 받기
+            guidecont.setText(item.getPhone());//연락처 받기
             guidedesc.setText(item.getDesc());
 
             String tmp = item.getPhoto();

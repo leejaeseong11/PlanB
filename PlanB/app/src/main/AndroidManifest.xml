@@ -26,6 +26,8 @@
             android:label="guide_list"/>
         <activity android:name=".selected_guide"
             android:label="Selected Guide"/>
+        <activity android:name=".UpdateUser"
+            android:label="Update User"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -97,26 +97,41 @@ public class destination_regist extends AppCompatActivity {
         sdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(destination_regist.this, sDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog d = new DatePickerDialog(destination_regist.this, sDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                d.getDatePicker().setMinDate(new Date().getTime());
+                d.show();
             }
         });
         edate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(destination_regist.this, eDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog d = new DatePickerDialog(destination_regist.this, eDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                d.getDatePicker().setMinDate(new Date().getTime());
+                d.show();
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calDateBetweense();
-                for (int i = 0; i <= (int) calDateDays; i++) {
-                    Date date1 = new Date(FirstDate.getTime() + (i * 24 * 60 * 60 * 1000));
-                    SimpleDateFormat datef = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-                    dateadd = datef.format(date1);
-                    postFirebaseDatabase(true);
+                if(area.getText().toString().length() != 0 && sdate.getText().toString().length() != 0 && edate.getText().toString().length() != 0 &&
+                        ts.getText().toString().length() != 0 && price.getText().toString().length() != 0) {
+                    if(calDateDays >= 0) {
+                        for (int i = 0; i <= (int) calDateDays; i++) {
+                            Date date1 = new Date(FirstDate.getTime() + (i * 24 * 60 * 60 * 1000));
+                            SimpleDateFormat datef = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                            dateadd = datef.format(date1);
+                            postFirebaseDatabase(true);
+                        }
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "종료일은 시작일보다 작을 수 없습니다.", Toast.LENGTH_LONG).show();
+                    }
                 }
-                finish();
+                else{
+                    Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -155,7 +170,6 @@ public class destination_regist extends AppCompatActivity {
             // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
             // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
             calDateDays = calDate / (24 * 60 * 60 * 1000);
-            calDateDays = Math.abs(calDateDays);
 
         } catch (ParseException e) {
             // 예외 처리

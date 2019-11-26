@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -79,10 +81,10 @@ public class destination_search extends AppCompatActivity {
                 intent = new Intent(destination_search.this, UpdateUser.class);
                 startActivity(intent);
                 break;
-//            case R.id.logout :
-//                Intent intent = new Intent(destination_search.this, logout.class);
-//                startActivity(intent);
-//                break;
+            case R.id.logout :
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
 //            case R.id.myregister:
 //                Intent intent = new Intent(destination_search.this, myregits.class);
 //                startActivity(intent);

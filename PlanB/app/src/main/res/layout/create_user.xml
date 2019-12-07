@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,161 +9,166 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageCreatUser"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onClickImage"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/imageCreatUser"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="이메일"
-                android:textSize="18sp" />
+                android:onClick="onClickImage"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-            <EditText
-                android:id="@+id/emailCreateUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="내용을 입력해주세요"
-                android:inputType="textEmailAddress" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="비밀번호"
-                android:textSize="18sp" />
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/passwordCreateUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="내용을 입력해주세요"
-                android:inputType="textPassword" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="이메일"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/emailCreateUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="내용을 입력해주세요"
+                    android:inputType="textEmailAddress" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="비밀번호"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/passwordCreateUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="내용을 입력해주세요"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="전화번호"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/phoneCreateUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="번호를 입력해주세요"
-        android:inputType="phone" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="성별"
-        android:textSize="18sp" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/male"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="male"
-            android:textSize="18sp"
-            android:onClick="onGenderRadioClicked"/>
-
-        <RadioButton
-            android:id="@+id/female"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="female"
-            android:textSize="18sp"
-            android:onClick="onGenderRadioClicked"/>
-
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="생년월일"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
-
         <TextView
-            android:id="@+id/dob"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/inputbox"
-            android:gravity="center_vertical"
-            android:text="날짜를 선택해주세요"
-            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="전화번호"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/selectDobButton"
-            android:layout_width="51dp"
+        <EditText
+            android:id="@+id/phoneCreateUser"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/ic_menu_today"
-            android:textSize="18sp"
-            android:onClick="onDatePickerClicked"/>
+            android:ems="10"
+            android:hint="번호를 입력해주세요"
+            android:inputType="phone" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="성별"
+            android:textSize="18sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onGenderRadioClicked"
+                android:text="male"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onGenderRadioClicked"
+                android:text="female"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="생년월일"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dob"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/inputbox"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="날짜를 선택해주세요"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/selectDobButton"
+                android:layout_width="51dp"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_menu_today"
+                android:onClick="onDatePickerClicked"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="소개글" />
+
+        <EditText
+            android:id="@+id/introductionCreateUser"
+            android:layout_width="match_parent"
+            android:layout_height="174dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/introduce"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="내용을 입력해주세요"
+            android:inputType="textPersonName|textMultiLine"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/updateUserButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="signUp"
+            android:text="회원가입" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="소개글" />
-
-    <EditText
-        android:id="@+id/introductionCreateUser"
-        android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/introduce"
-        android:ems="10"
-        android:gravity="top"
-        android:padding="12dp"
-        android:hint="내용을 입력해주세요"
-        android:inputType="textPersonName|textMultiLine" />
-
-    <Button
-        android:id="@+id/updateUserButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:onClick="signUp"/>
-
-</LinearLayout>
+</ScrollView>

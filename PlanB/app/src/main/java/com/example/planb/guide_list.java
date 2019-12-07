@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.planb.models.Mixedguideframe;
 import com.example.planb.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;

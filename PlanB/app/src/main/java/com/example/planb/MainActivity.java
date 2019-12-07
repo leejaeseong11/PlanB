@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = new User();
+                user.setPk(dataSnapshot.getKey());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     switch (snapshot.getKey()) {
                         case "date_of_birth" :
@@ -81,7 +82,40 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                User user = new User();
+                user.setPk(dataSnapshot.getKey());
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    switch (snapshot.getKey()) {
+                        case "date_of_birth" :
+                            user.setDob(snapshot.getValue().toString());
+                            break;
+                        case "email" :
+                            user.setEmail(snapshot.getValue().toString());
+                            break;
+                        case "gender" :
+                            user.setGender(snapshot.getValue().toString().charAt(0));
+                            break;
+                        case "introduce" :
+                            user.setIntroduce(snapshot.getValue().toString());
+                            break;
+                        case "phone" :
+                            user.setPhone(snapshot.getValue().toString());
+                            break;
+                        case "picture" :
+                            user.setPicture(snapshot.getValue().toString());
+                            break;
+                    }
+                }
+
+                for(User u : users){
+                    if(u.email.equals(user.email)){
+                        u.setPicture(user.picture);
+                        u.setPhone(user.phone);
+                        u.setIntroduce(user.introduce);
+                    }
+                }
+            }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {}
@@ -137,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        email = "test5@d.com";
+        email = "test12@naver.com";
         password = "password12!";
 
         if (isValidEmail() && isValidPasswd()) {

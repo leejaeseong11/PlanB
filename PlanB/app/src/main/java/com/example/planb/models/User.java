@@ -17,6 +17,7 @@ public class User {
     public String dob;      // YYYY-MM-DD
     public String introduce;
     public String picture;
+    private String pk;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -53,6 +54,14 @@ public class User {
                 ", introduce='" + introduce + '\'' +
                 ", picture='" + picture + '\'' +
                 '}';
+    }
+
+    public String getPk() {
+        return pk;
+    }
+
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 
     public void setEmail(String email) {

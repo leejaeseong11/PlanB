@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class destination_search extends AppCompatActivity {
@@ -48,17 +52,25 @@ public class destination_search extends AppCompatActivity {
         setdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(destination_search.this, DatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog d = new DatePickerDialog(destination_search.this, DatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                d.getDatePicker().setMinDate(new Date().getTime());
+                d.show();
             }
         });
         setsearch = findViewById(R.id.setsearch);
         setsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), guide_list.class);
-                intent.putExtra("REGION", search.getText().toString());
-                intent.putExtra("SET_DATE", setdate.getText().toString());
-                startActivity(intent);
+                String str = search.getText().toString();
+                if(str.length() != 0 && setdate.getText().toString().length() != 0) {
+                    Intent intent = new Intent(getApplicationContext(), guide_list.class);
+                    intent.putExtra("REGION", search.getText().toString());
+                    intent.putExtra("SET_DATE", setdate.getText().toString());
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "모든 칸을 입력해주세요", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -69,19 +81,20 @@ public class destination_search extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
         switch(item.getItemId()){
             case R.id.registerdestination :
-                Intent intent = new Intent(destination_search.this, destination_regist.class);
+                intent = new Intent(destination_search.this, destination_regist.class);
                 startActivity(intent);
                 break;
-//            case R.id.myinfo :
-//                Intent intent = new Intent(destination_search.this, myinfo.class);
-//                startActivity(intent);
-//                break;
-//            case R.id.logout :
-//                Intent intent = new Intent(destination_search.this, logout.class);
-//                startActivity(intent);
-//                break;
+            case R.id.myinfo :
+                intent = new Intent(destination_search.this, UpdateUser.class);
+                startActivity(intent);
+                break;
+            case R.id.logout :
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
 //            case R.id.myregister:
 //                Intent intent = new Intent(destination_search.this, myregits.class);
 //                startActivity(intent);
@@ -89,4 +102,6 @@ public class destination_search extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

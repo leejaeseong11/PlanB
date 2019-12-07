@@ -123,37 +123,52 @@ public class create_user extends AppCompatActivity {
         phone = editTextPhone.getText().toString();
         introduce = editTextIntroduce.getText().toString();
 
-        boolean flag = uploadFile();
-        if (isValidValues() && flag) {
-            try {
-                GMailSender gMailSender = new GMailSender("rlatmdrb1996@gmail.com", "aizqymlazkqcjmhj");
-                randomNum = gMailSender.getEmailCode();
-                String body = "Plan B에 가입해 주셔서 감사합니다!\n인증코드는 " + randomNum + "입니다.\n환영합니다!";
+        Random r = new Random();        // 테스트용
+        email = "test5@d.com";
+        password = "password12!";
+        phone="01022223333";
+        dobString="19901019";
+        introduce="test계정입니다."+r.nextInt();
+        gender='M';
 
-                //GMailSender.sendMail(제목, 본문내용, 받는사람);
-                gMailSender.sendMail("Plan B 인증 메일입니다.", body, email);
-                Toast.makeText(getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
-            } catch (SendFailedException e) {
-                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
-                return;
-            } catch (MessagingException e) {
-                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주십시오", Toast.LENGTH_SHORT).show();
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
+        boolean flag = uploadFile(), emailCheck = true;
 
-            dialog = LayoutInflater.from(this);
-            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
-            authDialog = new Dialog(this); //Dialog 객체 생성
-            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
-            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
-            authDialog.setOnCancelListener(new OnCancelClass()); //다이얼로그를 닫을 때 일어날 일을 정의하기 위해 onCancelListener 설정
-            authDialog.show(); //Dialog를 나타내어 준다.
-            countDownTimer();
-        } else {
-            Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < MainActivity.users.size(); ++i)
+            if (MainActivity.users.get(i).email.equals(email)) emailCheck = false;
+
+        if (!emailCheck) Toast.makeText(create_user.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
+        else if (!isValidValues()) Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
+        else if(!flag) Toast.makeText(create_user.this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show();
+        else {
+            createUser(email, password, phone, dobString, introduce, gender, urlString);    // 테스트용
+
+//            try {
+//                GMailSender gMailSender = new GMailSender("rlatmdrb1996@gmail.com", "aizqymlazkqcjmhj");
+//                randomNum = gMailSender.getEmailCode();
+//                String body = "Plan B에 가입해 주셔서 감사합니다!\n인증코드는 " + randomNum + "입니다.\n환영합니다!";
+//
+//                //GMailSender.sendMail(제목, 본문내용, 받는사람);
+//                gMailSender.sendMail("Plan B 인증 메일입니다.", body, email);
+//                Toast.makeText(getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
+//            } catch (SendFailedException e) {
+//                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
+//                return;
+//            } catch (MessagingException e) {
+//                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주십시오", Toast.LENGTH_SHORT).show();
+//                return;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return;
+//            }
+//
+//            dialog = LayoutInflater.from(this);
+//            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
+//            authDialog = new Dialog(this); //Dialog 객체 생성
+//            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
+//            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
+//            authDialog.setOnCancelListener(new OnCancelClass()); //다이얼로그를 닫을 때 일어날 일을 정의하기 위해 onCancelListener 설정
+//            authDialog.show(); //Dialog를 나타내어 준다.
+//            countDownTimer();
         }
     }
 

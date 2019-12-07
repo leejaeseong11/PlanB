@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        email = "test5@d.com";
-        password = "password12!";
+        email = "rlatmdrb1996@koreatech.ac.kr";      // 테스트용
+        password = "password12@";
 
         if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);

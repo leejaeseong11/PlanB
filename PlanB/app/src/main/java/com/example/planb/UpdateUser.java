@@ -1,5 +1,6 @@
 package com.example.planb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -72,6 +73,8 @@ public class UpdateUser extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.updateUserButton:
+            case R.id.passwordUpdateUser:
+                startActivity(new Intent(this, UpdatePassword.class));
             case R.id.cancelUpdateButton:
                 finish();
         }

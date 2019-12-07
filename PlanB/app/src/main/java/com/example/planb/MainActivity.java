@@ -78,12 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 users.add(user);
-
-                String str = "user list: ";
-                for (int i = 0; i < users.size(); i++) {
-                    str += users.get(i).toString() + "->";
-                }
-                Log.d("PlanB_Main", str);
             }
 
             @Override

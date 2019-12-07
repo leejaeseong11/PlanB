@@ -30,6 +30,8 @@
             android:label="Update User"/>
         <activity android:name=".destination_delete"
             android:label="My destination"/>
+        <activity android:name=".UpdatePassword"
+            android:label="Update password"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

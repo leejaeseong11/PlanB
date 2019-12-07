@@ -28,6 +28,8 @@
             android:label="Selected Guide"/>
         <activity android:name=".UpdateUser"
             android:label="Update User"/>
+        <activity android:name=".UpdatePassword"
+            android:label="Update password"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

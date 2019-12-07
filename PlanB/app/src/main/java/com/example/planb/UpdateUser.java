@@ -117,6 +117,8 @@ public class UpdateUser extends AppCompatActivity {
                 finish();
                 //수정 버튼 구현하기
                 break;
+            case R.id.passwordUpdateUser:
+                startActivity(new Intent(this, UpdatePassword.class));
             case R.id.cancelUpdateButton:
                 finish();
         }

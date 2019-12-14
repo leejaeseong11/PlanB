@@ -171,8 +171,8 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        email = "test12@naver.com";
-        password = "password12!";
+        email="test3@d.com";
+        password="password12!";
 
         if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);

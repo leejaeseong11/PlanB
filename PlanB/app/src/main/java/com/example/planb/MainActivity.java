@@ -194,12 +194,6 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        //*************테스트용*************
-        password = "password12!";
-        int n = Integer.parseInt(email);
-        email = "test" + n + "@d.com";
-        //*************테스트용*************
-
         if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
         } else {
@@ -239,8 +233,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 로그인
-    private void loginUser(String email, String password)
-    {
+    private void loginUser(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

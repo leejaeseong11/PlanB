@@ -11,6 +11,7 @@ public class guide {
     private String date;
     private String desc;
     private String price;
+    private String pk;
 
     public guide() {
     }
@@ -72,5 +73,13 @@ public class guide {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getPk() {
+        return pk;
+    }
+
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 }

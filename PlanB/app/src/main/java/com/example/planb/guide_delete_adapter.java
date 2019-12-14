@@ -66,6 +66,9 @@ public class guide_delete_adapter extends RecyclerView.Adapter<guide_delete_adap
     public void addItem(guide_delete_frame g){
         listData.add(g);
     }
+    public void deleteGuide(int pos){
+        listData.remove(pos);
+    }
     public void addItems(ArrayList<guide_delete_frame> items){
         this.listData = items;
     }
@@ -119,6 +122,8 @@ public class guide_delete_adapter extends RecyclerView.Adapter<guide_delete_adap
         public void setOnItemClickListener(OnItemClickListener listener) {
             this.listener = listener;
         }
+
+
 //        @Override
 //        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //            menu.setHeaderTitle("삭제하시겠습니까?");

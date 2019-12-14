@@ -124,8 +124,8 @@ public class create_user extends AppCompatActivity {
         introduce = editTextIntroduce.getText().toString();
 
         Random r = new Random();        // 테스트용
-        email = "test" + r.nextInt()%10 + "@d.com";
-        password = "password12!";
+        email = "ghkdtkzm@naver.com";
+        password = "123123";
         phone="01022223333";
         dobString="19901019";
         introduce="test계정입니다."+r.nextInt();

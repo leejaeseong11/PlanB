@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 guide guide = new guide();
+                guide.setPk(dataSnapshot.getKey());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     switch (snapshot.getKey()) {
                         case "area" :
@@ -154,10 +155,17 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+            }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                for(int i = 0; i < MainActivity.guides.size(); i++){
+                    if(MainActivity.guides.get(i).getPk().equals(dataSnapshot.getKey()) ){
+                        MainActivity.guides.remove(i);
+                    }
+                }
+            }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
@@ -171,8 +179,8 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        email = "test12@naver.com";
-        password = "password12!";
+        email = "ghkdtkzm@naver.com";
+        password = "123123";
 
         if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
@@ -230,5 +238,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
     }
 }

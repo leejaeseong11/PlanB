@@ -43,7 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
@@ -321,7 +320,6 @@ public class create_user extends AppCompatActivity {
                     });
             return true;
         } else {
-            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

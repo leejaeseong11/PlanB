@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<guide> guides = new ArrayList<>();
     // 비밀번호 정규식
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{6,16}$");
 
     // 파이어베이스 인증 객체 생성
     private FirebaseAuth firebaseAuth;
@@ -170,9 +170,6 @@ public class MainActivity extends AppCompatActivity {
     public void onSigninButtonClicked(View view) {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
-
-//        email = "test12@naver.com";
-//        password = "password12!";
 
         if (isValidEmail() && isValidPasswd()) {
             loginUser(email, password);

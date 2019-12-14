@@ -95,10 +95,10 @@ public class destination_search extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 break;
-//            case R.id.myregister:
-//                Intent intent = new Intent(destination_search.this, myregits.class);
-//                startActivity(intent);
-//                break;
+            case R.id.myregister:
+                intent = new Intent(destination_search.this, destination_delete.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -2,6 +2,7 @@ package com.example.planb;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -49,8 +50,10 @@ import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
 public class create_user extends AppCompatActivity {
+    private Button editdatePicker;
+
     // 비밀번호 정규식
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{6,16}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{4,16}$");
 
     // 파이어베이스 인증 객체 생성
     private FirebaseAuth firebaseAuth;
@@ -70,6 +73,7 @@ public class create_user extends AppCompatActivity {
     private Character gender = null;    // M, F
     private String dobString = "";            // YYYY-MM-DD
     private String introduce = "";
+    private static int key;
     private Uri filePath;//uri로 이미지 받아오는 경로(암시적 intent)
     String urlString = ""; //이미지 파일 경로
     String filename;
@@ -104,6 +108,7 @@ public class create_user extends AppCompatActivity {
         editTextPassword = findViewById(R.id.passwordCreateUser);
         editTextPhone = findViewById(R.id.phoneCreateUser);
         editTextIntroduce = findViewById(R.id.introductionCreateUser);
+        editdatePicker = findViewById(R.id.selectDobButton);
         editImage = findViewById(R.id.imageCreatUser);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -118,19 +123,13 @@ public class create_user extends AppCompatActivity {
         phone = editTextPhone.getText().toString();
         introduce = editTextIntroduce.getText().toString();
 
-        //*************테스트용*************
-        Random r = new Random();
-        int num = r.nextInt(10);
-        email="test" + num + "@d.com";
-        password = "password12!";
-        phone="01088887777";
+        Random r = new Random();        // 테스트용
+        email = "ghkdtkzm@naver.com";
+        password = "123123";
+        phone="01022223333";
+        dobString="19901019";
+        introduce="test계정입니다."+r.nextInt();
         gender='M';
-        dobString="1999-12-31";
-        introduce="test용 아이디 "+num+"번";
-        urlString="gs://planb-32e2f.appspot.com/images/20191213_2933.png";
-        createUser(email, password, phone, dobString, introduce, gender, urlString);
-        if (true) return;
-        //*************테스트용*************
 
         boolean flag = uploadFile(), emailCheck = true;
 
@@ -141,33 +140,35 @@ public class create_user extends AppCompatActivity {
         else if (!isValidValues()) Toast.makeText(create_user.this, "정보 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
         else if(!flag) Toast.makeText(create_user.this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show();
         else {
-            try {
-                GMailSender gMailSender = new GMailSender("rlatmdrb1996@gmail.com", "aizqymlazkqcjmhj");
-                randomNum = gMailSender.getEmailCode();
-                String body = "Plan B에 가입해 주셔서 감사합니다!\n인증코드는 " + randomNum + "입니다.\n환영합니다!";
+            createUser(email, password, phone, dobString, introduce, gender, urlString);    // 테스트용
 
-                //GMailSender.sendMail(제목, 본문내용, 받는사람);
-                gMailSender.sendMail("Plan B 인증 메일입니다.", body, email);
-                Toast.makeText(getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
-            } catch (SendFailedException e) {
-                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
-                return;
-            } catch (MessagingException e) {
-                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주십시오", Toast.LENGTH_SHORT).show();
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
-
-            dialog = LayoutInflater.from(this);
-            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
-            authDialog = new Dialog(this); //Dialog 객체 생성
-            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
-            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
-            authDialog.setOnCancelListener(new OnCancelClass()); //다이얼로그를 닫을 때 일어날 일을 정의하기 위해 onCancelListener 설정
-            authDialog.show(); //Dialog를 나타내어 준다.
-            countDownTimer();
+//            try {
+//                GMailSender gMailSender = new GMailSender("rlatmdrb1996@gmail.com", "aizqymlazkqcjmhj");
+//                randomNum = gMailSender.getEmailCode();
+//                String body = "Plan B에 가입해 주셔서 감사합니다!\n인증코드는 " + randomNum + "입니다.\n환영합니다!";
+//
+//                //GMailSender.sendMail(제목, 본문내용, 받는사람);
+//                gMailSender.sendMail("Plan B 인증 메일입니다.", body, email);
+//                Toast.makeText(getApplicationContext(), "이메일을 확인해주세요", Toast.LENGTH_SHORT).show();
+//            } catch (SendFailedException e) {
+//                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
+//                return;
+//            } catch (MessagingException e) {
+//                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주십시오", Toast.LENGTH_SHORT).show();
+//                return;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return;
+//            }
+//
+//            dialog = LayoutInflater.from(this);
+//            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
+//            authDialog = new Dialog(this); //Dialog 객체 생성
+//            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
+//            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
+//            authDialog.setOnCancelListener(new OnCancelClass()); //다이얼로그를 닫을 때 일어날 일을 정의하기 위해 onCancelListener 설정
+//            authDialog.show(); //Dialog를 나타내어 준다.
+//            countDownTimer();
         }
     }
 
@@ -212,9 +213,11 @@ public class create_user extends AppCompatActivity {
     private void createUser(String email, String password, String phone, String dob, String introduce, Character gender, String picture) {
         myRef = database.getReference("User");
        // Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> userValue = null;
 
         User user = new User(email, phone, gender, dob, introduce, picture);
-        final Map<String, Object> userValue = user.toMap();
+        userValue = user.toMap();
+        myRef.push().updateChildren(userValue);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -223,13 +226,10 @@ public class create_user extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 회원가입 성공
                             Toast.makeText(create_user.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                            myRef.push().updateChildren(userValue);
                             finish();
                         } else {
                             // 회원가입 실패
                             Toast.makeText(create_user.this, "회원가입 실패..", Toast.LENGTH_SHORT).show();
-                            authDialog.cancel();
-                            authDialog.dismiss();
                         }
                     }
                 });
@@ -330,6 +330,7 @@ public class create_user extends AppCompatActivity {
                     });
             return true;
         } else {
+            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

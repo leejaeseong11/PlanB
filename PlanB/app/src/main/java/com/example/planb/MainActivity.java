@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Event_Guide", "onChildAdded: " + dataSnapshot.getValue().toString());
 
                 guide guide = new guide();
+                guide.setPk(dataSnapshot.getKey());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     switch (snapshot.getKey()) {
                         case "area" :
@@ -171,6 +172,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Log.d("Event_Guide", "onChildRemoved: " + dataSnapshot.getValue().toString());
+
+               for(int i = 0; i < MainActivity.guides.size(); i++){
+                    if(MainActivity.guides.get(i).getPk().equals(dataSnapshot.getKey()) ){
+                        MainActivity.guides.remove(i);
+                    }
+                }
             }
 
             @Override

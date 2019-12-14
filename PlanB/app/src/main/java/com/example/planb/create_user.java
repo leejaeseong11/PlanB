@@ -2,7 +2,6 @@ package com.example.planb;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -43,14 +42,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
 public class create_user extends AppCompatActivity {
-    private Button editdatePicker;
-
     // 비밀번호 정규식
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{6,16}$");
 
@@ -72,7 +70,6 @@ public class create_user extends AppCompatActivity {
     private Character gender = null;    // M, F
     private String dobString = "";            // YYYY-MM-DD
     private String introduce = "";
-    private static int key;
     private Uri filePath;//uri로 이미지 받아오는 경로(암시적 intent)
     String urlString = ""; //이미지 파일 경로
     String filename;
@@ -107,7 +104,6 @@ public class create_user extends AppCompatActivity {
         editTextPassword = findViewById(R.id.passwordCreateUser);
         editTextPhone = findViewById(R.id.phoneCreateUser);
         editTextIntroduce = findViewById(R.id.introductionCreateUser);
-        editdatePicker = findViewById(R.id.selectDobButton);
         editImage = findViewById(R.id.imageCreatUser);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -121,6 +117,20 @@ public class create_user extends AppCompatActivity {
         password = editTextPassword.getText().toString();
         phone = editTextPhone.getText().toString();
         introduce = editTextIntroduce.getText().toString();
+
+        //*************테스트용*************
+        Random r = new Random();
+        int num = r.nextInt(10);
+        email="test" + num + "@d.com";
+        password = "password12!";
+        phone="01088887777";
+        gender='M';
+        dobString="1999-12-31";
+        introduce="test용 아이디 "+num+"번";
+        urlString="gs://planb-32e2f.appspot.com/images/20191213_2933.png";
+        createUser(email, password, phone, dobString, introduce, gender, urlString);
+        if (true) return;
+        //*************테스트용*************
 
         boolean flag = uploadFile(), emailCheck = true;
 

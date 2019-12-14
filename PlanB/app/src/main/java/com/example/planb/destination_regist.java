@@ -21,10 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public class destination_regist extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -139,23 +137,14 @@ public class destination_regist extends AppCompatActivity {
     }
 
     public void postFirebaseDatabase(boolean add) {
-        mPostReference = FirebaseDatabase.getInstance().getReference();
+        mPostReference = FirebaseDatabase.getInstance().getReference("Guide");
         uemail = user.getEmail();//유저 이메일 받는 변수
-        Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
-        String keyvalue = "20191230";
         if (add) {
             guide post = new guide(uemail, area.getText().toString(), dateadd, ts.getText().toString(), price.getText().toString());
             postValues = post.toMap();
         }
-
-        String datekey = user.getUid();
-        StringTokenizer st = new StringTokenizer(dateadd, "/");
-        while (st.hasMoreTokens()) {
-            datekey += st.nextToken();
-        }
-        childUpdates.put("/Guide/" + datekey, postValues);
-        mPostReference.updateChildren(childUpdates);
+        mPostReference.push().updateChildren(postValues);
     }
 
     public void calDateBetweense() {
